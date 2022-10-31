@@ -25,6 +25,7 @@ import mock from './mock.js';
 const group = new DraggableAreasGroup();
 const DraggableArea1 = group.addArea('area1');
 const DraggableArea2 = group.addArea('area2');
+const DraggableArea3 = group.addArea('area3');
 
 
 export default class CrossArea extends Component {
@@ -32,7 +33,8 @@ export default class CrossArea extends Component {
         super();
         this.state = {
             leftTags: mock.leftTags,
-            rightTags: mock.rightTags
+            rightTags: mock.rightTags,
+            rightTags1: mock.rightTags1
         }
     }
 
@@ -45,7 +47,7 @@ export default class CrossArea extends Component {
     render() {
         return (
             <div className="CrossArea">
-                <div className="square left">
+                <div className="square right">
                     <DraggableArea1
                         tags={this.state.leftTags}
                         render={({tag}) => (
@@ -74,6 +76,19 @@ export default class CrossArea extends Component {
                         )}
                         onChange={rightTags => {
                             this.setState({rightTags});
+                        }}
+                    />
+                </div>
+                <div className="square right">
+                    <DraggableArea3
+                        tags={this.state.rightTags1}
+                        render={({tag}) => (
+                            <div className="tag">
+                                {tag.content}
+                            </div>
+                        )}
+                        onChange={rightTags1 => {
+                            this.setState({rightTags1});
                         }}
                     />
                 </div>

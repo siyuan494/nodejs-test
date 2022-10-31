@@ -64,4 +64,8 @@ export default {
         id: 'been',
         content: 'been',
     }],
+    rightTags1: [{
+        id: 'tomato1',
+        content: 'tomato1',
+    }],
 }
