@@ -11,28 +11,72 @@ import ReactDOM from 'react-dom';
 // import List from './List';
 // import NestedTags from './NestedTags';
 
-import {DraggableArea} from 'react-draggable-tags';
 
-import styles from './css/style.css';
+// import {DraggableArea} from 'react-draggable-tags';
+import {DraggableAreasGroup} from 'react-draggable-tags';
 
-const initialTags = [
-    {id: 1, content: 'apple'}, {id: 2, content: 'olive'}, {id: 3, content: 'banana'},
-    {id: 4,  content: 'lemon'}, {id: 5, content: 'orange'}, {id: 6, content: 'grape'},
-    {id: 7, content: 'strawberry'}, {id: 8, content: 'cherry'}, {id: 9, content: 'peach'}];
+//import styles from './css/style.css';
+import styles from './css/style.less';
+import deleteBtn from './imgs/delete.png';
+import deleteBtn2x from './imgs/delete@2x.png';
 
-export default class Main extends Component {
+import mock from './mock.js';
+
+const group = new DraggableAreasGroup();
+const DraggableArea1 = group.addArea('area1');
+const DraggableArea2 = group.addArea('area2');
+
+
+export default class CrossArea extends Component {
+    constructor() {
+        super();
+        this.state = {
+            leftTags: mock.leftTags,
+            rightTags: mock.rightTags
+        }
+    }
+
+    handleClickDelete(tag) {
+        const rightTags = this.state.rightTags.filter(t => tag.id !== t.id);
+        this.setState({rightTags});
+    }
+
+
     render() {
         return (
-            <div className="Simple">
-                <DraggableArea
-                    tags={initialTags}
-                    render={({tag, index}) => (
-                        <div className="tag">
-                            {tag.content}
-                        </div>
-                    )}
-                    onChange={tags => console.log(tags)}
-                />
+            <div className="CrossArea">
+                <div className="square left">
+                    <DraggableArea1
+                        tags={this.state.leftTags}
+                        render={({tag}) => (
+                            <div className="tag">
+                                {tag.content}
+                            </div>
+                        )}
+                        onChange={leftTags => {
+                            this.setState({leftTags});
+                        }}
+                    />
+                </div>
+                <div className="square right">
+                    <DraggableArea2
+                        tags={this.state.rightTags}
+                        render={({tag}) => (
+                            <div className="tag">
+                                <img
+                                    className="delete"
+                                    src={deleteBtn}
+                                    srcSet={`${deleteBtn2x} 2x`}
+                                    onClick={() => this.handleClickDelete(tag)}
+                                />
+                                {tag.content}
+                            </div>
+                        )}
+                        onChange={rightTags => {
+                            this.setState({rightTags});
+                        }}
+                    />
+                </div>
             </div>
         );
     }
@@ -42,6 +86,6 @@ export default class Main extends Component {
 const root = document.createElement('div');
 document.body.appendChild(root);
 ReactDOM.render(
-    <Main />,
+    <CrossArea />,
     root
 );
