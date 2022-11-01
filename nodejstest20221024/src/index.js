@@ -40,7 +40,9 @@ export default class CrossArea extends Component {
 
     handleClickDelete(tag) {
         const rightTags = this.state.rightTags.filter(t => tag.id !== t.id);
-        this.setState({rightTags});
+        const leftTags = this.state.leftTags;
+        leftTags.push(tag);
+        this.setState({leftTags, rightTags});
     }
 
 
