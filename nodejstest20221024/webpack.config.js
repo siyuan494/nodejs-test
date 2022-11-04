@@ -5,6 +5,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
     //调试时使用development开发模式
@@ -15,6 +16,16 @@ module.exports = {
         path: path.join(__dirname, './dist'),
         filename: 'bundle.js',
     },//出口
+
+    //webpack小于5不自带polyfill不识别http
+    resolve: {
+        fallback: {
+            "http": require.resolve("stream-http")
+        }
+    },
+    plugins: [
+        new NodePolyfillPlugin()
+    ],
 
     devServer: {
         static: './src'
