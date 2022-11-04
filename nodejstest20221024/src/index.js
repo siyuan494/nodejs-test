@@ -27,6 +27,9 @@ const DraggableArea1 = group.addArea('area1');
 const DraggableArea2 = group.addArea('area2');
 const DraggableArea3 = group.addArea('area3');
 
+//var fastXmlParser = require('fast-xml-parser');
+//var fs = require('fs');
+var http = require('http');
 
 export default class CrossArea extends Component {
     constructor() {
