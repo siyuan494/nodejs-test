@@ -50,3 +50,7 @@ npm install babel-preset-stage-2 --save
 npm install koa
 
 npm install react-syntax-highlighter
+
+
+webpack5不支持自带的很多插件，需要配置polyfill
+npm install node-polyfill-webpack-plugin
