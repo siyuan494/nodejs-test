@@ -1,0 +1,36 @@
+/**
+ * 使用nodejs自带的http模块时报错：
+ * Module not found: Error: Can't resolve 'http' in '/Users/shisiyuan/IdeaProjects20220916/nodejs-test/nodejstest20221024/src'
+ * BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+ * This is no longer the case. Verify if you need this module and configure a polyfill for it.
+ * If you want to include a polyfill, you need to:
+ *         - add a fallback 'resolve.fallback: { "http": require.resolve("stream-http") }'
+ *         - install 'stream-http'
+ * If you don't want to include a polyfill, you can use an empty module like this:
+ *         resolve.fallback: { "http": false }
+ * 参考这个wiki修改：https://qa.1r1g.com/sf/ask/4721415401/
+ */
+
+ 最后，经过长时间的研究，我找到了解决方案。在 webpack v5.xx 中，像 http（在 web3 中是必需的）这样的节点模块需要一个 polyfill 和一个 fallback 才能工作。因此，我在 webpack.config.js 中添加了以下内容：
+
+
+ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+ module.exports = {
+     {...},
+     resolve: {
+       {...},
+       fallback: {
+         "http": require.resolve("stream-http")
+       }
+     },
+     plugins: [
+       {...},
+       new NodePolyfillPlugin()
+     ],
+   };
+
+ 并安装以下软件包：
+
+ npm i -D stream-http
+ npm i -D node-polyfill-webpack-plugin
